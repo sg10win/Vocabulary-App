@@ -1,0 +1,92 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #74ebd5, #acb6e5);
+  margin: 0;
+  padding: 20px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.word-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.word-table th, .word-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.word-table th {
+  background: #007BFF;
+  color: white;
+}
+
+.btn {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin: 5px;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
+.btn-toggle {
+  background: #007BFF;
+  color: white;
+}
+
+.btn-toggle:hover {
+  background: #0056b3;
+}
+
+.sentence {
+  font-size: 14px;
+  color: #444;
+  background: #f3f3f3;
+  padding: 8px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.btn-known {
+  background: #28a745;
+  color: white;
+}
+
+.btn-known:hover {
+  background: #218838;
+}
+
+.btn-unknown {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-unknown:hover {
+  background: #c82333;
+}

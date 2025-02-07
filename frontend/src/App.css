@@ -1,0 +1,118 @@
+/* General Page Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #74ebd5, #acb6e5);
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Title */
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Table Styling */
+.word-table {
+    width: 80%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.word-table th, .word-table td {
+    padding: 14px;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.word-table th {
+    background: #5c86ff;
+    color: white;
+}
+
+
+
+.actioncol {
+    background: #5c86ff;
+    color: white;
+    width: 570px;
+}
+
+
+.word-table tr:nth-child(even) {
+    background: #f3f3f3;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 14px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    border: none;
+    margin: 5px;
+    width: fit-content
+    
+}
+
+.btn-toggle {
+    background: #ffa500;
+    color: white;
+}
+
+.btn-known {
+    background: #00cc66;
+    color: white;
+}
+
+.btn-known.active {
+    background: #007f4e;
+}
+
+.btn-unknown {
+    background: #ff4d4d;
+    color: white;
+}
+
+.btn-unknown.active {
+    background: #b30000;
+}
+
+/* Sentence Animation */
+.sentence-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    text-align: center;
+}
+
+.sentence-container.show {
+    max-height: 100px;
+}
+
+.sentence {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    background: #f3f3f3;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
