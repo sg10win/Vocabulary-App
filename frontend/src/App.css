@@ -1,118 +1,208 @@
 /* General Page Styling */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, #74ebd5, #acb6e5);
+    background: white;
     margin: 0;
-    padding: 20px;
+    padding: 0;
     color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 /* Title */
 h1 {
-    font-size: 32px;
+    font-size: 20px; /* Reduced from 25px */
     font-weight: 700;
     color: #222;
-    margin-bottom: 20px;
+    margin: 15px 10px;
     text-align: center;
+}
+
+/* Table Wrapper */
+.table-wrapper {
+    width: 100%;
+    max-width: 360px; /* Matches Galaxy S8 width */
+    padding: 5px;
+    box-sizing: border-box;
+    overflow-x: auto;
 }
 
 /* Table Styling */
 .word-table {
-    width: 80%;
+    width: 100%;
     border-collapse: collapse;
     background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-left: auto;
-    margin-right: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+    table-layout: fixed; /* Ensures consistent column widths */
 }
 
-.word-table th, .word-table td {
-    padding: 14px;
-    font-size: 20px;
-    font-weight: 600;
+.word-table th,
+.word-table td {
+    padding: 8px 4px; /* Reduced padding */
+    font-size: 14px; /* Reduced from 16px */
     text-align: center;
+    vertical-align: middle;
+    word-break: break-word; /* Prevents text overflow */
 }
 
 .word-table th {
-    background: #5c86ff;
-    color: white;
+    background: #c7e3fc;
+    color: #1e3d59;
+    font-weight: 600;
+    font-size: 13px; /* Smaller font for headers */
 }
-
-
-
-.actioncol {
-    background: #5c86ff;
-    color: white;
-    width: 570px;
-}
-
 
 .word-table tr:nth-child(even) {
-    background: #f3f3f3;
+    background: #f9f9f9;
 }
 
-/* Buttons */
+/* Action Column - Modified for single row buttons */
+.actioncol {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around; /* Evenly spaces buttons */
+    align-items: center;
+    padding: 5px 0;
+    gap: 4px; /* Reduced gap between buttons */
+}
+
+/* Buttons Styling - Modified for smaller screens */
 .btn {
-    padding: 10px 14px;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 8px;
+    min-width: 30px; /* Fixed width */
+    height: 30px;
+    font-size: 14px; /* Reduced from 20px */
+    font-weight: bold;
+    border-radius: 6px;
+    background: #f0f0f0;
+    color: #444;
+    border: 1px solid #ccc; /* Thinner border */
     cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-    border: none;
-    margin: 5px;
-    width: fit-content
-    
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1; /* Allows buttons to grow equally */
+    padding: 0 2px; /* Small horizontal padding */
+    margin: 0 1px; /* Minimal margin */
 }
 
-.btn-toggle {
-    background: #ffa500;
-    color: white;
-}
-
-.btn-known {
-    background: #00cc66;
-    color: white;
-}
-
+/* Active states */
 .btn-known.active {
-    background: #007f4e;
-}
-
-.btn-unknown {
-    background: #ff4d4d;
-    color: white;
+    background: #d4f2e1;
+    border-color: #66cc99;
+    color: #1b5e20;
 }
 
 .btn-unknown.active {
-    background: #b30000;
+    background: #fcd6d6;
+    border-color: #e57373;
+    color: #b71c1c;
 }
 
-/* Sentence Animation */
+.btn:active {
+    transform: scale(0.96);
+}
+
+/* Sentence Styling */
 .sentence-container {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease-in-out;
+    transition: max-height 0.3s ease-in-out;
     text-align: center;
 }
 
 .sentence-container.show {
-    max-height: 100px;
+    max-height: 120px; /* Reduced from 150px */
 }
 
 .sentence {
-    font-size: 18px;
+    font-size: 13px; /* Reduced from 14px */
     font-weight: 500;
     color: #333;
     background: #f3f3f3;
-    padding: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    min-height: 36px; /* Reduced height */
+}
+
+/* Additional Mobile Optimizations */
+@media (max-width: 360px) {
+    .word-table th,
+    .word-table td {
+        padding: 6px 2px;
+        font-size: 13px;
+    }
+    
+    .btn {
+        min-width: 28px;
+        height: 28px;
+        font-size: 13px;
+    }
+    
+    .sentence {
+        font-size: 12px;
+        padding: 6px;
+    }
+}
+/* Action Cell - Contains the button row */
+.action-cell {
+    padding: 4px !important; /* Reduce padding to save space */
+    width: 120px; /* Fixed width to prevent column resizing */
+}
+
+/* Button Row - Flex container for buttons */
+.button-row {
+    display: flex;
+    flex-direction: row; /* Ensures horizontal layout */
+    justify-content: space-between; /* Spaces buttons evenly */
+    align-items: center;
+    gap: 4px; /* Small gap between buttons */
+}
+
+/* Button Styles - Optimized for small screens */
+.btn {
+    min-width: 30px; /* Fixed width */
+    height: 30px;
+    font-size: 14px;
     border-radius: 6px;
-    margin-top: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0; /* Prevents buttons from shrinking */
+}
+
+/* Toggle button (🔼/🔽) */
+.btn-toggle {
+    background: #f0f0f0;
+}
+
+/* Known button (✔) */
+.btn-known {
+    background: #f0f0f0;
+}
+
+/* Unknown button (❌) */
+.btn-unknown {
+    background: #f0f0f0;
+}
+
+/* Active states */
+.btn-known.active {
+    background: #d4f2e1;
+    border-color: #66cc99;
+    color: #1b5e20;
+}
+
+.btn-unknown.active {
+    background: #fcd6d6;
+    border-color: #e57373;
+    color: #b71c1c;
 }
