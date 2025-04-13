@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-const API_URL = "http://127.0.0.1:8000";
+
+//const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://vocabularyappapi-production.up.railway.app";  
 
 const WordTable = () => {
     const [words, setWords] = useState([]);
@@ -49,27 +51,31 @@ const WordTable = () => {
                     </tr>
                 </thead>
                 <tbody>
+
                     {words.map((wordItem) => (
                         <React.Fragment key={wordItem.Word}>
                             <tr>
                                 <td>{wordItem.Word}</td>
                                 <td>{wordItem.Translation}</td>
-                                <td>
-                                    <button className="btn btn-toggle" onClick={() => toggleSentence(wordItem.Word)}>
-                                    Example Sentence{visibleSentences[wordItem.Word] ? "🔼" : "🔽"}
-                                    </button>
-                                    <button 
-                                        className={`btn btn-known ${wordItem.std_state === 1 ? "active" : ""}`} 
-                                        onClick={() => updateState(wordItem.Word, 1)}
-                                    >
-                                        ✔
-                                    </button>
-                                    <button 
-                                        className={`btn btn-unknown ${wordItem.std_state === 0 ? "active" : ""}`} 
-                                        onClick={() => updateState(wordItem.Word, 0)}
-                                    >
-                                        ❌
-                                    </button>
+                                <td className="action-cell">
+                                    <div className="button-row">
+                                        <button className="btn btn-toggle" onClick={() => toggleSentence(wordItem.Word)}>
+                                            {visibleSentences[wordItem.Word] ? "🔼" : "🔽"}
+                                        </button>
+                                        <button 
+                                            className={`btn btn-unknown ${wordItem.std_state === 0 ? "active" : ""}`} 
+                                            onClick={() => updateState(wordItem.Word, 0)}
+                                        >
+                                            ❌
+                                        </button>
+                                        <button 
+                                            className={`btn btn-known ${wordItem.std_state === 1 ? "active" : ""}`} 
+                                            onClick={() => updateState(wordItem.Word, 1)}
+                                        >
+                                            ✔
+                                        </button>
+                                        
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
