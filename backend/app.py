@@ -1,38 +1,179 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import BackgroundTasks  # Add BackgroundTasks for async saving
-
 import pandas as pd
-import os
 
 app = FastAPI()
 
-# CORS settings to allow frontend access
+# CORS settings
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-FILE_PATH = os.path.abspath("word.xlsx")  # Converts relative path to absolute
+# Static data loaded from Excel originally
+words_data = [{'Word': 'against',
+  'Translation': 'נֶגֶד',
+  'Sentence': 'נֶגֶד',
+  'std_state': 0},
+ {'Word': 'ahead of',
+  'Translation': 'לפני',
+  'Sentence': 'לפני',
+  'std_state': 0},
+ {'Word': 'albeit',
+  'Translation': 'אַף כִּי',
+  'Sentence': 'אַף כִּי',
+  'std_state': 0},
+ {'Word': 'all in all',
+  'Translation': 'בסך הכל',
+  'Sentence': 'בסך הכל',
+  'std_state': 0},
+ {'Word': 'along',
+  'Translation': 'לְאוֹרֶך',
+  'Sentence': 'לְאוֹרֶך',
+  'std_state': 0},
+ {'Word': 'along with',
+  'Translation': 'יחד עם',
+  'Sentence': 'יחד עם',
+  'std_state': 0},
+ {'Word': 'alongside',
+  'Translation': 'בַּצַד',
+  'Sentence': 'בַּצַד',
+  'std_state': 0},
+ {'Word': 'also', 'Translation': 'גַם', 'Sentence': 'גַם', 'std_state': 0},
+ {'Word': 'although',
+  'Translation': 'לַמרוֹת',
+  'Sentence': 'לַמרוֹת',
+  'std_state': 0},
+ {'Word': 'altogether',
+  'Translation': 'לְגַמרֵי',
+  'Sentence': 'לְגַמרֵי',
+  'std_state': 0},
+ {'Word': 'always',
+  'Translation': 'תָמִיד',
+  'Sentence': 'תָמִיד',
+  'std_state': 0},
+ {'Word': 'amid',
+  'Translation': 'בְּתוֹך',
+  'Sentence': 'בְּתוֹך',
+  'std_state': 0},
+ {'Word': 'among',
+  'Translation': 'בֵּין',
+  'Sentence': 'בֵּין',
+  'std_state': 0},
+ {'Word': 'and', 'Translation': 'ו', 'Sentence': 'ו', 'std_state': 0},
+ {'Word': 'around',
+  'Translation': 'סְבִיב',
+  'Sentence': 'סְבִיב',
+  'std_state': 0},
+ {'Word': 'as', 'Translation': 'כְּמוֹ', 'Sentence': 'כְּמוֹ', 'std_state': 0},
+ {'Word': 'as', 'Translation': 'כְּמוֹ', 'Sentence': 'כְּמוֹ', 'std_state': 0},
+ {'Word': 'as a result',
+  'Translation': 'כתוצאה מכך',
+  'Sentence': 'כתוצאה מכך',
+  'std_state': 0},
+ {'Word': 'as if',
+  'Translation': 'כאילו',
+  'Sentence': 'כאילו',
+  'std_state': 0},
+ {'Word': 'as long as',
+  'Translation': 'כֹּל עוֹד',
+  'Sentence': 'כֹּל עוֹד',
+  'std_state': 0},
+ {'Word': 'as soon as',
+  'Translation': 'ברגע',
+  'Sentence': 'ברגע',
+  'std_state': 0},
+ {'Word': 'as well as',
+  'Translation': 'כמו גם',
+  'Sentence': 'כמו גם',
+  'std_state': 0},
+ {'Word': 'aside from',
+  'Translation': 'מִלְבַד',
+  'Sentence': 'מִלְבַד',
+  'std_state': 0},
+ {'Word': 'at', 'Translation': 'בְּ-', 'Sentence': 'בְּ-', 'std_state': 0},
+ {'Word': 'at first',
+  'Translation': 'בהתחלה',
+  'Sentence': 'בהתחלה',
+  'std_state': 0},
+ {'Word': 'at last',
+  'Translation': 'לְבָסוֹף',
+  'Sentence': 'לְבָסוֹף',
+  'std_state': 0},
+ {'Word': 'backward',
+  'Translation': 'לְאָחוֹר',
+  'Sentence': 'לְאָחוֹר',
+  'std_state': 0},
+ {'Word': 'based on',
+  'Translation': 'מבוסס על',
+  'Sentence': 'מבוסס על',
+  'std_state': 0},
+ {'Word': 'because',
+  'Translation': 'כִּי',
+  'Sentence': 'כִּי',
+  'std_state': 0},
+ {'Word': 'because of',
+  'Translation': 'בִּגלַל',
+  'Sentence': 'בִּגלַל',
+  'std_state': 0},
+ {'Word': 'before',
+  'Translation': 'לִפנֵי',
+  'Sentence': 'לִפנֵי',
+  'std_state': 0},
+ {'Word': 'before',
+  'Translation': 'לִפנֵי',
+  'Sentence': 'לִפנֵי',
+  'std_state': 0},
+ {'Word': 'behind',
+  'Translation': 'מֵאָחוֹר',
+  'Sentence': 'מֵאָחוֹר',
+  'std_state': 0},
+ {'Word': 'being that',
+  'Translation': 'להיות זה',
+  'Sentence': 'להיות זה',
+  'std_state': 0},
+ {'Word': 'below',
+  'Translation': 'לְהַלָן',
+  'Sentence': 'לְהַלָן',
+  'std_state': 0},
+ {'Word': 'beneath',
+  'Translation': 'תַחַת',
+  'Sentence': 'תַחַת',
+  'std_state': 0},
+ {'Word': 'beside',
+  'Translation': 'לְיַד',
+  'Sentence': 'לְיַד',
+  'std_state': 0},
+ {'Word': 'besides',
+  'Translation': 'מִלְבַד',
+  'Sentence': 'מִלְבַד',
+  'std_state': 0},
+ {'Word': 'besides',
+  'Translation': 'מִלְבַד',
+  'Sentence': 'מִלְבַד',
+  'std_state': 0},
+ {'Word': 'besides',
+  'Translation': 'מִלְבַד',
+  'Sentence': 'מִלְבַד',
+  'std_state': 0},
+ {'Word': 'between',
+  'Translation': 'בֵּין',
+  'Sentence': 'בֵּין',
+  'std_state': 0},
+ {'Word': 'beyond', 'Translation': 'מעבר', 'Sentence': 'מעבר', 'std_state': 0},
+ {'Word': 'both',
+  'Translation': 'שְׁנֵיהֶם',
+  'Sentence': 'שְׁנֵיהֶם',
+  'std_state': 0},
+ {'Word': 'both... and…',
+  'Translation': 'גם... וגם...',
+  'Sentence': 'גם... וגם...',
+  'std_state': 0},
+ {'Word': 'but', 'Translation': 'אֲבָל', 'Sentence': 'אֲבָל', 'std_state': 0},]
 
-
-
-
-
-# Load Excel data
-def load_data():
-    print(os.path.exists(FILE_PATH))
-    if os.path.exists(FILE_PATH):
-        return pd.read_excel(FILE_PATH)
-    else:
-        raise HTTPException(status_code=404, detail="File not found")
-
-# Save to Excel
-def save_data(df):
-    df.to_excel(FILE_PATH, index=False)
 
 @app.get("/")
 def read_root():
@@ -40,16 +181,12 @@ def read_root():
 
 @app.get("/words")
 def get_words():
-    df = load_data()
-    return df.to_dict(orient="records")
-
+    return words_data
 
 @app.post("/update_word")
-def update_word(word: str, state: int, background_tasks: BackgroundTasks):
-    df = load_data()
-    if word in df["Word"].values:
-        df.loc[df["Word"] == word, "std_state"] = state
-        background_tasks.add_task(save_data, df)  # Save asynchronously
-        return {"message": "Updated successfully"}
-    else:
-        raise HTTPException(status_code=404, detail="Word not found")
+def update_word(word: str, state: int):
+    for w in words_data:
+        if w["Word"] == word:
+            w["std_state"] = state
+            return {"message": "Updated successfully"}
+    raise HTTPException(status_code=404, detail="Word not found")
